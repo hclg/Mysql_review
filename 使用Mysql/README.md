@@ -1,5 +1,7 @@
 # 使用Mysql
 
+> ``名称等东西可以加上这个
+
 ### 1. show
 
 ```mysql
@@ -10,6 +12,7 @@ show COLUMNS FROM 表名# 显示表列
 SHOW STATUS，用于显示广泛的服务器状态信息；
 SHOW GRANTS; #显示授予用户的权限
 SHOW ERRORS和SHOW WARNINGS; #用来显示服务器错误或警告消息。
+desc 表名; #查询表结构
 ```
 
 ### 2. SELECT
@@ -24,10 +27,43 @@ SELECT ID FROM TABL_E LIMIT 5, 5; #从第5行开始的后5个行，行是从0开
 SELECT ID FROM TABL_E LIMIT 5 OFFSET 1; #从第1行开始的后5个行，行是从0开始的
 SELECT TABL_E.ID FROM TABL_E; #完全限定列名
 
+# 查询常量值
+SELECT 100;
+SELECT 'ssa';
+# 查询表达式
+SELECT 100%98;
+# 查询函数
+SELECT VERSION();
+
+# 起别名
+/*
+便于理解
+如果查询字段有重名的情况,使用别名可区分
+也可以只加空格
+加双引号可以区分
+*/
+SELECT 100%98 AS 结果;
+SELECT last_name AS 姓, first_name AS 名 FROM emp;
+SELECT last_name "姓", first_name 名 FROM emp;
+SELECT DISTINCT last_name "姓", first_name 名 FROM emp; 去重
+SELECT CONCAT('a','b','c') AS 结果;
+# 连接
+/*
+ 结果
+ abc
+ */
+ 
+SELECT 
+  IFNULL(sid, 0) AS id, # 如果为空换成什么值
+  CONCAT(sid,',', cid)  #其实就像c++中的 cout << 一样；
+FROM
+  sc ;
 
 ```
 
 > 不能部分使用DISTINCT DISTINCT关键字应用于所有列而 不仅是前置它的列。如果给出SELECT DISTINCT vend_id, prod_price，除非指定的两个列都不同，否则所有行都将被 检索出来。
+>
+> <img src="image-20200228172217496.png" alt="image-20200228172217496" style="zoom:100%;" />
 
 ### 3. 排序数据
 
@@ -62,4 +98,19 @@ SELECT ID,Iv FROM TABL_E ORDER BY ID DESC, Iv;
   limit 必须放在orderby 之后
   ```
 
+  #### 3.2 条件查询
   
+   /*
+   语法:
+  	select
+  		查询列表 3
+  	form
+  		表名 1
+  	where                  #r如同if
+  		筛选条件; 2
+   */
+
+```mysql
+
+```
+
