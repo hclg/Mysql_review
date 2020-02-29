@@ -1,4 +1,4 @@
-# 使用Mysql
+# 使用Mysql 的基础查询语句
 
 > ``名称等东西可以加上这个
 
@@ -46,7 +46,7 @@ SELECT 100%98 AS 结果;
 SELECT last_name AS 姓, first_name AS 名 FROM emp;
 SELECT last_name "姓", first_name 名 FROM emp;
 SELECT DISTINCT last_name "姓", first_name 名 FROM emp; 去重
-SELECT CONCAT('a','b','c') AS 结果;
+SELECT CONCAT('a','b','c') AS 结果; # 如果有null就会自动显示null
 # 连接
 /*
  结果
@@ -61,7 +61,7 @@ FROM
 
 ```
 
-> 不能部分使用DISTINCT DISTINCT关键字应用于所有列而 不仅是前置它的列。如果给出SELECT DISTINCT vend_id, prod_price，除非指定的两个列都不同，否则所有行都将被 检索出来。
+> 不能部分使用DISTINCT, DISTINCT关键字应用于所有列而 不仅是前置它的列。如果给出SELECT DISTINCT vend_id, prod_price，除非指定的两个列都不同，否则所有行都将被 检索出来。
 >
 > <img src="image-20200228172217496.png" alt="image-20200228172217496" style="zoom:100%;" />
 
@@ -100,17 +100,139 @@ SELECT ID,Iv FROM TABL_E ORDER BY ID DESC, Iv;
 
   #### 3.2 条件查询
   
-   /*
-   语法:
-  	select
-  		查询列表 3
-  	form
-  		表名 1
-  	where                  #r如同if
-  		筛选条件; 2
-   */
+  
 
 ```mysql
-
+ /*
+ 语法:
+	select
+		查询列表 3
+	form
+		表名 1
+	where                  #r如同if 表达的结果不是true就是false
+		筛选条件; 2
+ */
+ 
+/*
+一按条件表达式筛选
+条件运算符： >< = != <=  >=
+二逻辑表达式
+	&& || ！
+	and or not
+	模糊表达式
+	like
+	between and
+	in
+	is null
+*/
+# 查询大于12000的信息
+SELECT 
+  * 
+FROM
+  emp 
+ WHILE
+    salary > 12000 ;
+# 查看不等于90的
+SELECT 
+	*
+FROM
+	emp
+WHERE
+	dep_id!=90; 或者 dep_id<>90;
 ```
 
+* 按逻辑表达式
+  * 用于连接条件表达式的
+
+```mysql
+# 90到100之间
+SELECT 
+	*
+FROM 
+	emp
+WHERE 
+	dep_id >= 90 AND dep_id <= 100;
+
+# id 不是在90到100之间的，或者工资高于 cs 不等于90的
+SELECT 
+*
+FROM 
+	emp
+WHERE
+	NOT(90 <= dep_id AND dep_id <= 100) OR cs != 90;
+```
+
+* 模糊查询
+
+  ```mysql
+  like
+  between and
+  in
+  is null | is not null
+  # like
+  一般跟通配符一起用
+  % 任意多个字符 包含0, not null
+  _ 任意单个字符
+  \ 如果要转义就用 也可以自己设置 ESCAPE '$'
+  # 查询包含字母c的信息
+  SELECT * FROM emp WHERE
+  	name_s LIKE '%c%'; # %->是通配符
+  # 查第二个字符是c的
+  SELECT * FROM emp WHERE
+  	name_s LIKE '_c%'; # %->是通配符
+  ```
+
+  ```mysql
+  # between and
+  # 90-100
+  # 包含临界值
+  # 必须从左到右
+  SELECT * FROM emp WHERE dep_id BETWEEN 90 AND 100;
+  # in
+  
+  SELECT 
+  	*
+  FROM
+  	emp
+  WHERE
+  	dep_id = 90 OR dep_id = 100 OR dep_id = 110;
+  
+  # --------------------------------------------------------
+  # 判断是否属于in内的值
+  
+  SELECT 
+  	*
+  FROM
+  	emp
+  WHERE
+  	dep_id IN(90, 100, 110);
+  
+  ```
+
+  * is null | is not null
+
+    > 等于和普通的运算符不能判断null值
+
+```mysql
+SELECT 
+	*
+FROM
+	emp
+WHERE
+	cs is null;
+```
+
+* 安全等于
+
+  * `<=>`: 这个可以用null和普通值
+
+  ```mysql
+  SELECT 
+  	*
+  FROM
+  	emp
+  WHERE
+  	cs <=> null;
+  ```
+
+  
