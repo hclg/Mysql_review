@@ -75,14 +75,39 @@ SELECT MONTH(NOW()) 月;
 
 SELECT MONTHNAME(NOW()) 月;
 
-# 获取
-str_to_date('9-12-1999', '%m-%d-%Y'); 月日年 
+# 获取 字符转日期
+SELECT str_to_date('9-12-1999', '%m-%d-%Y'); 月日年
+SELECT * FROM orders; 
+SELECT * from orders 
+where order_date = str_to_date('10-3-2005', '%c-%d-%Y');
 
+# 日期转字符
+SELECT date_format(now(), '%y-%m-%d') as out_put;
 
+# 其他
 
+SELECT version();
+SELECT DATABASE();
 
+# 流程函数
+# if 
+SELECT if(10 < 5, '大', '小');
 
+# case 函数的使用一: switch case
 
+case 要判断的字段或表达式
+when 常量1 then 要显示的值1或语句1;
+when 常量2 then 要显示的值2或语句2;
+else 要显示的值
+end
+
+SELECT salary 原始工资, department,
+CASE department
+when 30 then salary*1.1
+when 40 then salary*1.2
+else salary
+end as 新工资
+from emp;
 
 
 
