@@ -109,9 +109,26 @@ else salary
 end as 新工资
 from emp;
 
+# 分组函数
+/*
+统计函数，
+聚合函数，
+分组函数
 
+分类
+sum  avg max min count
+*/
 
+use myemployees;
+SELECT sum(salary) from employees;
+SELECT AVG(salary) from employees;
+# 2参数支持哪些类型
+SELECT count(commission_pct) FROM employees;
+SELECT sum(distinct commission_pct) FRoM employees;
+# 忽略null值
 
+# count
+SELECT count(*) from employees;
 
 
 

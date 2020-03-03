@@ -1,9 +1,20 @@
 {
     "sqltools.connections": [
         {
-            "database": "test",
+            "database": "myemployees",
             "dialect": "MySQL",
+            "isActive": false,
+            "isConnected": false,
             "name": "HCLG",
+            "password": "123",
+            "port": 3306,
+            "server": "localhost",
+            "username": "root"
+        },
+        {
+            "database": "girls",
+            "dialect": "MySQL",
+            "name": "HCL",
             "password": "123",
             "port": 3306,
             "server": "localhost",
