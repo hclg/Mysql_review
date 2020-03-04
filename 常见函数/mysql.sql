@@ -109,7 +109,7 @@ else salary
 end as 新工资
 from emp;
 
-# 分组函数
+#### 1.5 分组函数
 /*
 统计函数，
 聚合函数，
@@ -129,11 +129,114 @@ SELECT sum(distinct commission_pct) FRoM employees;
 
 # count
 SELECT count(*) from employees;
+# 查询最大入职时间和最小入职时间的相差天数
+SELECT datediff(MAx(hiredate), min(hiredate ))
+
+# 和分组函数一同查询的字段要求必须事group by
+/*
+语法：
+  select 分组函数, 列(要求出现在group by的后面)
+  from 表
+  【where 筛选条件】
+  group by 分组列表
+  order by 字句
+
+*/
+# 每个job_id 的最高工资
+SELECT MAX(salary), job_id FROM
+employees
+group by job_id;
 
 
+# 每个位置 的 的部门个数
+SELECT COUnt(*), location_id 
+FROM departments
+GROUP BY location_id
+
+# 添加筛选条件
+# where 分组前筛选
+SELECT AVG(salary), department_id
+FROM employees
+WHERE email LIKE '%a%'
+GROUP by department_id;
+# 分组后筛选 having
+SELECT count(*) num, department_id
+FROM employees
+GROUP by department_id
+HAVING num > 2;
+
+SELECT MAX(salary) ma, job_id
+FROM employees
+where commission_pct is not null
+GROUP by job_id
+HAVING ma > 12000
+
+select min(salary) mi, manager_id
+from employees
+where manager_id > 102
+GROUP by manager_id
+having mi > 5000
+
+# 多字段
+SELECT count(*) con, department_id, job_id
+FROM employees
+group by job_id,department_id;
+
+# 多表连接
+/*
+  笛卡尔乘积现象，m行和n行 --n*m行
+  添加条件
+  分类：
+      sql199标准
+      功能：
+        内连接
+            等值连接
+            非等值连接
+            自连接
+        外连接
+            左外
+            右外
+        交叉
+
+    n表连接至少需要n-1个连接条件
+    多表的顺序没有要求
+*/
+
+SELECT * from beauty;
+SELECT * from boys;
+SELECT name, boyName 
+from boys,beauty
+WHERE boyfriend_id = boys.id;
+
+# 等值连接
+
+SELECT name, boyName 
+from boys,beauty
+WHERE beautty.boyfriend_id = boys.id;
+
+SELECT `last_name`,department_name 
+FROM  employees,departments 
+WHERE employees.department_id = departments.department_id;
+
+# 两个表的顺序可以交换
+SELECT e.last_name, e.job_id, j.job_title
+FROM  employees e,jobs j
+WHERE e.job_id = j.job_id;
 
 
+# 查询城市名第二个字符为o的部门名和城市名
 
+select department_name, city
+FROM departments d, locations lo
+WHERE d.location_id = lo.location_id
+AND city like '_o%';
+
+# 查询每个城市的部门个数
+SELECT city, count(department_id) 个数
+FROM locations c, departments d
+WHERE c.location_id = d.location_id
+GROUP BY city
+order by count('个数') desc;
 
 
 

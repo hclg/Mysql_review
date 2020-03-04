@@ -132,3 +132,60 @@ else salary
 end as 新工资
 from emp;
 ```
+#### 1.5 分组函数
+```sql
+/*
+统计函数，
+聚合函数，
+分组函数
+
+分类
+sum  avg max min count
+*/
+
+use myemployees;
+SELECT sum(salary) from employees;
+SELECT AVG(salary) from employees;
+# 2参数支持哪些类型
+SELECT count(commission_pct) FROM employees;
+SELECT sum(distinct commission_pct) FRoM employees;
+# 忽略null值
+
+# count
+SELECT count(*) from employees;
+# 查询最大入职时间和最小入职时间的相差天数
+SELECT datediff(MAx(hiredate), min(hiredate ))
+
+# 和分组函数一同查询的字段要求必须事group by
+/*
+语法：
+  select 分组函数, 列(要求出现在group by的后面)
+  from 表
+  【where 筛选条件】
+  group by 分组列表
+  order by 字句
+
+*/
+# 每个job_id 的最高工资
+SELECT MAX(salary), job_id FROM
+employees
+group by job_id;
+
+
+# 每个位置 的 的部门个数
+SELECT COUnt(*), location_id 
+FROM departments
+GROUP BY location_id
+
+# 添加筛选条件
+# where 分组前筛选
+SELECT AVG(salary), department_id
+FROM employees
+WHERE email LIKE '%a%'
+GROUP by department_id;
+# 分组后筛选 having
+SELECT count(*) num, department_id
+FROM employees
+GROUP by department_id
+HAVING num > 2;
+```
